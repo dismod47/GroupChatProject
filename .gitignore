@@ -28,6 +28,7 @@ yarn-error.log*
 # prisma
 prisma/dev.db
 prisma/dev.db-journal
+# Note: Postgres uses DATABASE_URL env var, no local files needed
 
 # Capacitor
 ios/

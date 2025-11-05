@@ -7,6 +7,8 @@
     "build": "next build",
     "build:static": "next build && next export",
     "start": "next start",
+    "postinstall": "prisma generate",
+    "vercel-build": "prisma generate && prisma migrate deploy && next build",
     "seed": "node prisma/seed.js",
     "loadtest": "bash run-local-loadtest.sh || cmd /c run-local-loadtest.bat",
     "loadtest:cleanup": "bash cleanup-test-data.sh || cmd /c cleanup-test-data.bat",
