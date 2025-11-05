@@ -1,0 +1,40 @@
+{
+  "name": "campus-study-groups",
+  "version": "1.0.0",
+  "description": "Ultra-basic QR web app for campus study groups",
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "build:static": "next build && next export",
+    "start": "next start",
+    "seed": "node prisma/seed.js",
+    "loadtest": "bash run-local-loadtest.sh || cmd /c run-local-loadtest.bat",
+    "loadtest:cleanup": "bash cleanup-test-data.sh || cmd /c cleanup-test-data.bat",
+    "flowtest": "bash run-flow-test.sh || cmd /c run-flow-test.bat",
+    "cap:sync": "npx cap sync",
+    "cap:ios": "npx cap open ios",
+    "cap:copy": "npx cap copy"
+  },
+  "dependencies": {
+    "@capacitor/core": "^6.0.0",
+    "@capacitor/ios": "^6.0.0",
+    "@capacitor/app": "^6.0.0",
+    "@capacitor/share": "^6.0.0",
+    "@prisma/client": "^5.0.0",
+    "bcryptjs": "^2.4.3",
+    "js-cookie": "^3.0.5",
+    "next": "^14.0.0",
+    "react": "^18.0.0",
+    "react-dom": "^18.0.0"
+  },
+  "devDependencies": {
+    "@types/js-cookie": "^3.0.5",
+    "autoprefixer": "^10.4.21",
+    "postcss": "^8.5.6",
+    "prisma": "^5.0.0",
+    "tailwindcss": "^3.4.0"
+  },
+  "prisma": {
+    "seed": "node prisma/seed.js"
+  }
+}

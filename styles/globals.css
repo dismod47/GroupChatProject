@@ -1,0 +1,86 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  body {
+    @apply bg-neutral-50 text-neutral-900 antialiased;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
+      'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue', sans-serif;
+  }
+}
+
+@layer components {
+  /* Skeleton loader */
+  .skeleton {
+    @apply animate-pulse bg-neutral-200 rounded;
+  }
+
+  /* Toast notifications */
+  .toast {
+    @apply fixed top-4 right-4 z-50 max-w-md p-4 rounded-xl shadow-lg;
+    @apply transform transition-all duration-300 ease-out;
+  }
+
+  .toast-enter {
+    @apply translate-x-full opacity-0;
+  }
+
+  .toast-enter-active {
+    @apply translate-x-0 opacity-100;
+  }
+
+  .toast-exit {
+    @apply translate-x-0 opacity-100;
+  }
+
+  .toast-exit-active {
+    @apply translate-x-full opacity-0;
+  }
+
+  /* Button micro-animations */
+  .btn-lift {
+    @apply transition-all duration-150 ease-out;
+  }
+
+  .btn-lift:hover:not(:disabled) {
+    @apply -translate-y-0.5 shadow-md;
+  }
+
+  .btn-lift:active:not(:disabled) {
+    @apply translate-y-0 shadow-sm;
+  }
+
+  /* Card hover emphasis */
+  .card-hover {
+    @apply transition-all duration-180 ease-out;
+  }
+
+  .card-hover:hover {
+    @apply shadow-md -translate-y-0.5;
+  }
+
+  /* Chip/badge hover emphasis */
+  .chip-hover {
+    @apply transition-all duration-150 ease-out;
+  }
+
+  .chip-hover:hover {
+    @apply shadow-sm scale-105;
+  }
+
+  /* Chat message fade-in */
+  .message-fade-in {
+    animation: fade-slide-in 180ms ease-out;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}

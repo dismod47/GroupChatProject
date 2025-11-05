@@ -1,0 +1,42 @@
+HOW TO TOGGLE MAINTENANCE MODE:
+
+1. To ENABLE maintenance mode:
+   - Set environment variable: MAINTENANCE_MODE=1
+   
+   For local development:
+   - Windows (PowerShell): $env:MAINTENANCE_MODE="1"; npm run dev
+   - Windows (CMD): set MAINTENANCE_MODE=1 && npm run dev
+   - Linux/Mac: MAINTENANCE_MODE=1 npm run dev
+   
+   For production:
+   - Add to your .env file: MAINTENANCE_MODE=1
+   - Or set in your hosting platform's environment variables: MAINTENANCE_MODE=1
+   - Restart your application server
+
+2. To DISABLE maintenance mode:
+   - Unset the variable or set it to anything other than "1"
+   
+   For local development:
+   - Windows (PowerShell): $env:MAINTENANCE_MODE="0"; npm run dev
+   - Windows (CMD): set MAINTENANCE_MODE=0 && npm run dev
+   - Linux/Mac: MAINTENANCE_MODE=0 npm run dev
+   - Or simply: npm run dev (if not set, defaults to disabled)
+   
+   For production:
+   - Remove MAINTENANCE_MODE from .env file OR set MAINTENANCE_MODE=0
+   - Restart your application server
+
+3. What happens when maintenance mode is enabled:
+   - Top yellow banner appears: "Maintenance in progress..."
+   - All Create Group buttons are disabled
+   - All Join buttons are disabled
+   - Chat input and send button are disabled
+   - Toggle Group Status button is disabled
+   - Leave Group button is disabled
+   - All write API endpoints return HTTP 503 with message: "Maintenance in progress—please try again soon"
+   - Users can still browse courses, groups, and view chat (read-only)
+
+4. Testing:
+   - Health check endpoint (/api/health) still works
+   - Maintenance status endpoint (/api/maintenance-status) shows current status
+

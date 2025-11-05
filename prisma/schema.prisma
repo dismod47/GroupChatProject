@@ -1,0 +1,108 @@
+// Prisma schema for Campus Study Groups
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = "file:./dev.db"
+}
+
+model Course {
+  code  String @id
+  title String
+
+  groups Group[]
+  roster RosterEntry[]
+}
+
+model Group {
+  id          String   @id @default(uuid())
+  name        String
+  courseCode  String
+  creatorName String
+  isOpen      Boolean  @default(true)
+  createdAt   DateTime @default(now())
+
+  course    Course        @relation(fields: [courseCode], references: [code])
+  members   GroupMember[]
+  messages  Message[]
+
+  @@index([courseCode])
+}
+
+model GroupMember {
+  id       String @id @default(uuid())
+  groupId  String
+  userName String
+
+  group Group @relation(fields: [groupId], references: [id], onDelete: Cascade)
+
+  @@unique([groupId, userName])
+  @@index([groupId])
+  @@index([userName])
+}
+
+model Message {
+  id        String   @id @default(uuid())
+  groupId   String
+  author    String
+  text      String
+  timestamp DateTime @default(now())
+  reported  Boolean  @default(false)
+  deleted   Boolean  @default(false)
+
+  group     Group     @relation(fields: [groupId], references: [id], onDelete: Cascade)
+  reactions Reaction[]
+
+  @@index([groupId, timestamp])
+}
+
+model Reaction {
+  id        String   @id @default(uuid())
+  messageId String
+  userName  String
+  emoji     String   // 👍, ❤️, or 💡
+  createdAt DateTime @default(now())
+
+  message Message @relation(fields: [messageId], references: [id], onDelete: Cascade)
+
+  @@unique([messageId, userName, emoji])
+  @@index([messageId])
+}
+
+model RosterEntry {
+  id         String @id @default(uuid())
+  courseCode String
+  userName   String
+
+  course Course @relation(fields: [courseCode], references: [code], onDelete: Cascade)
+
+  @@unique([courseCode, userName])
+  @@index([courseCode])
+}
+
+model User {
+  id       String @id @default(uuid())
+  userName String @unique
+  password String
+  createdAt DateTime @default(now())
+
+  @@index([userName])
+}
+
+model AuditLog {
+  id        String   @id @default(uuid())
+  timestamp DateTime @default(now())
+  actor     String   // Username or 'system'
+  action    String   // e.g., 'MESSAGE_POSTED', 'GROUP_CREATED', etc.
+  entityType String? // 'course', 'group', 'message', 'user', or null
+  entityId  String?  // ID of the course/group/message/user
+  detail    String?  // Additional context
+
+  @@index([timestamp])
+  @@index([actor])
+  @@index([action])
+}
+
